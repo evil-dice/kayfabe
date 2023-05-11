@@ -23,7 +23,7 @@ if ($Gender -eq 'M') { Write-Host "Men's $Division Divison" }
 if ($Gender -eq 'F') { Write-Host "Women's $Division Divison" }
 
 
-function Book-Angle {
+function Angle {
 	[CmdletBinding()]
     param(
         [Parameter()]
@@ -81,7 +81,9 @@ function Wrestler {
     [switch]$Legend,
     [switch]$Manager,
     [switch]$Authority,
-    [switch]$Partner
+    [switch]$Partner,
+    [switch]$Champion,
+    [String]$Trait
     )
  
     # Import roster for processing
@@ -111,6 +113,12 @@ function Wrestler {
     if ($Authority.IsPresent) { $FilteredRoster = $FilteredRoster | Where-Object -FilterScript {($_.ROLE -eq 'Authority')}}
     if ($FanFavorite.IsPresent) { $FilteredRoster = $FilteredRoster | Where-Object -FilterScript {($_.ROLE -eq 'FanFavorite')}}
     if ($Partner.IsPresent) { $FilteredRoster = $FilteredRoster | Where-Object -FilterScript {($_.ROLE -eq 'FanFavorite')}}
+
+    #Championships
+    if ($Champion.IsPresent) { $FilteredRoster = $FilteredRoster | Where-Object -FilterScript {($_.Championships -ne '')}}
+
+    #By Traits...
+    if ($Trait.IsPresent) { $FilteredRoster = $FilteredRoster | Where-Object -FilterScript {($_.Trait1 -eq "$Trait") -or ($_.Trait2 -eq "$Trait")}}
 
 
     # Get an item from the array and convert from a generic object to a string

@@ -10,4 +10,4 @@ Repackage,"""$($ROLE[0]) is on a losing streak, and thinks a new gimmick will ch
 ,"""The General Manager is sick and a guest GM fills in for the night.""",,,,,,,,,
 Separate Ways,"After a falling out, $($ROLE[0]) has now broken up. ",1,TagTeam,,,,,,,
 You Still Got It,"""Aging legend $($ROLE[0]) returns to prove they've still got it.""",1,Wrestler -Legend,,,,,,,
-Protection,"""Cowardly heel $($ROLE[0]) decides to hire $($ROLE[1]) as their bodyguard.""",2,Wrestler -Jobber -Heel,,,,,,,
+Protection,"""Cowardly heel $($ROLE[0]) decides to hire $($ROLE[1]) as their bodyguard.""",2,"Wrestler -Jobber -Heel -Trait ""Coward""","Wrestler -Trait ""Giant""",,,,,,
