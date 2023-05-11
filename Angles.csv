@@ -1,0 +1,13 @@
+ANGLE,DESCRIPTION,PARTICIPANTS,ROLE1,ROLE2,ROLE3,ROLE4,ROLE5,ROLE6,ROLE7,ROLE8
+Top Champion Open Challenge,"""$($ROLE[0]) offers an open challenge to anyone on the roster for their title. $($ROLE[1]) accepts!""",2,Wrestler -MainEvent -Champion,,,,,,,
+Frustration Builds,"""$($ROLE[0]) and $($ROLE[1]) work a tag match together, but can't get on the same page. Eventually $($ROLE[0]) walks out, leaving $($ROLE[1]) to fend for themselves.""",2,,,,,,,,
+All the Gold,"""$($ROLE[1]) decides they want $($ROLE[1])'s title as well as their own.""",2,Wrestler -MidCard -Champion,Wrestler -MainEvent -Champion,,,,,,
+A Lot of Heart,"""Seemingly outclassed, $($ROLE[0]) makes a bold challenge to $($ROLE[1]).""",2,Wrestler -Jobber,Wrestler -MainEvent,,,,,,
+,,,,,,,,,,
+Tag Team Tryouts,"""Singles competitor $($ROLE[0]) begins looking for a partner to join the tag team division.""",1,,,,,,,,
+Injured Partner,"""Tag Team Champions $.($ROLE[0]) have had member $($ROLE[1]) sidelined with an injury prior to their next match!""",2,TagTeam -Champion,Wrestler -TagTeam,,,,,,
+Repackage,"""$($ROLE[0]) is on a losing streak, and thinks a new gimmick will change their luck.""",1,,,,,,,,
+,"""The General Manager is sick and a guest GM fills in for the night.""",,,,,,,,,
+Separate Ways,"After a falling out, $($ROLE[0]) has now broken up. ",1,TagTeam,,,,,,,
+You Still Got It,"""Aging legend $($ROLE[0]) returns to prove they've still got it.""",1,Wrestler -Legend,,,,,,,
+Protection,"""Cowardly heel $($ROLE[0]) decides to hire $($ROLE[1]) as their bodyguard.""",2,Wrestler -Jobber -Heel,,,,,,,
