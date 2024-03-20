@@ -1,0 +1,2 @@
+ANGLE,DESCRIPTION,SIDES,ROLE1,ROLE2,ROLE3,ROLE4,ROLE5,ROLE6,ROLE7,ROLE8
+Top Champion Open Challenge,"""f{ROLE[0]} offers an open challenge to anyone on the roster for their title. {ROLE[1]} accepts!""",1v1,"MainEvent, Champion",,,,,,,

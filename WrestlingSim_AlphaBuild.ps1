@@ -23,6 +23,14 @@ if ($Gender -eq 'M') { Write-Host "Men's $Division Divison" }
 if ($Gender -eq 'F') { Write-Host "Women's $Division Divison" }
 
 
+#Set initial variables for reset function
+$StartupVars = @()
+$StartupVars = Get-Variable | Select-Object -ExpandProperty Name
+#Function to reset variables for testing
+function reset-variables {
+    Get-Variable -Exclude $StartupVars | Remove-Variable -Force
+}
+
 function Angle {
 	[CmdletBinding()]
     param(
@@ -83,7 +91,7 @@ function Wrestler {
     [switch]$Authority,
     [switch]$Partner,
     [switch]$Champion,
-    [String]$Trait
+    [String]$Traits
     )
  
     # Import roster for processing
@@ -115,10 +123,10 @@ function Wrestler {
     if ($Partner.IsPresent) { $FilteredRoster = $FilteredRoster | Where-Object -FilterScript {($_.ROLE -eq 'FanFavorite')}}
 
     #Championships
-    if ($Champion.IsPresent) { $FilteredRoster = $FilteredRoster | Where-Object -FilterScript {($_.Championships -ne '')}}
+    if ($Champion.IsPresent) { $FilteredRoster = $FilteredRoster | Where-Object -FilterScript {($_.CHAMPIONSHIP -ne '')}}
 
     #By Traits...
-    if ($Trait.IsPresent) { $FilteredRoster = $FilteredRoster | Where-Object -FilterScript {($_.Trait1 -eq "$Trait") -or ($_.Trait2 -eq "$Trait")}}
+    if ($Traits -ne '') { $FilteredRoster = $FilteredRoster | Where-Object -FilterScript {($_.Trait1 -contains $Traits) -or ($_.Trait2 -contains $Traits)} }
 
 
     # Get an item from the array and convert from a generic object to a string
@@ -132,5 +140,7 @@ function Wrestler {
     return $selection
     }
 
- }
+function DynamicFullProcess {
+
+
 }

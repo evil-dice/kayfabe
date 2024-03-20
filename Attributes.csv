@@ -1,0 +1,10 @@
+ATTRIBUTE,WORKRATE,ENTERTAINMENT,PSYCHOLOGY,INTIMIDATION,HIGHRISK,STAMINA
+Entertaining,0,1,1,0,1,0
+FightsDirty,0,0,0,0,-1,0
+Violent,0,0,1,1,0,0
+Hoss,1,0,0,1,0,1
+Technician,1,0,0,0,0,1
+HighRisk,0,1,0,0,1,0
+FanFavorite,0,1,0,0,0,1
+Veteran,1,0,1,0,0,1
+Giant,-1,0,-1,2,0,0
