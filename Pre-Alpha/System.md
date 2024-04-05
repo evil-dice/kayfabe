@@ -1,4 +1,4 @@
-# Kayfabe Logic System
+# Kayfabe
 In this application, the idea is to simulate Kayfabe, the in-universe Watsonian wrestling logic that powers wrestling show's storylines and events. This is done by using **Wrestlers**, who are used for roles in different **Angles**, which lead to **Matches** held on **Shows**. 
 
 ## Wrestlers
@@ -55,4 +55,17 @@ A side is one or more wrestlers sharing a goal in a given segment. Most commonly
 # Mike's idea
 The idea that came from talking to Mike was very simple. Randomized lists for different match elements, and you just click them and cycle through them. The elements will be very broad -- less "swerve cuts a promo from hangman's baby nursery" and more "The heel has made it personal by messing with family". This will allow you to just cycle through a few of them until it creates an interesting story. You can similarly cycle through match finishes or random events of different types. 
 
-#Angles
+# UX Order of Operations
+## Default mode, "Booker Mode" ( Match First, then Angle)
+1. Number of participants is selected
+    * Defines how many Wrestlers are in the match
+2. Match Type is selected
+    * A list of options filtered based on the number of Participants
+    * Defines the Sides of the match
+    * Defines how many Participants are on each Side
+3. Participants are chosen
+    * Self-explanatory...Defines who is in the match
+4. Optional: An Angle is generated. 
+    * Angles are filtered to match Participants in the match (i.e., a match with no Heels would not ever generate an angle using a Heel, etc.)
+    * You can also just type your own in for one-offs, allowing you to take a broad angle and make it more specific
+
