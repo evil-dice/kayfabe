@@ -15,12 +15,19 @@ class Wrestler:
         self.gimmick = gimmick
         self.traits = traits
 
-# [Import Roster] Use CSV to populate Roster object with data
+# [Load Roster] Use CSV to populate Roster object with data ... now with file select dialog!
 from csv import DictReader
-FullRoster = list()
+import tkinter as TK
 
-def import_roster():
-    filename = "testroster.csv"
+FullRoster = list()
+def load_roster():
+    filename = TK.filedialog.askopenfilename(
+        filetypes=(
+            ("CSV files", "*.csv"),
+            ("All Files", "*.*")
+        )
+    )
+    # filename = "\data\testroster.csv"
     roster = open(filename, 'r')
     reader = DictReader(roster, delimiter=";")
     for character in reader:
@@ -79,53 +86,3 @@ def set_manager(manager, *clients):
     for client in clients:
         edit_wrestler(client, manager=manager)
     return filter_roster(client, manager)
-
-
-# TEST CODE BELOW THIS LINE
-import_roster() #works
-
-add_wrestler('Bray Wyatt', 'Heel', 2, 3, 'Supernatural', 'Cult Leader') #works
-add_wrestler('John Cena', 'Face', 2, 2, 'Heroic', 'Veteran') #works
-
-edit_wrestler('John Cena', alignment='Face', workrate=3, charisma=1)
-
-print(FullRoster)
-
-view_roster()
-
-delete_wrestler('Cody Rhodes')
-
-filter_roster('Heel')
-
-set_tagteam('Cody & Wyatt', 'Cody Rhodes', 'Bray Wyatt')
-
-set_faction('The New Family', 'Cody Rhodes', 'Bray Wyatt', 'Dustin Rhodes')            
-
-set_faction('', 'Cody Rhodes')
-
-set_manager('Brandi Rhodes','Cody Rhodes')
-
-print(FullRoster[0]['name'])
-
-
-
-
-
-
-
-
-with open('testroster.csv', 'r') as f:
-    reader = csv.reader(f)
-    for row in reader:
-        roster.append(Wrestler(row[0], row[1]))
-
-
-
-
-
-#Grab Roster file data
-roster_database = pd.read_csv('Roster.csv')
-
-roster = pd.DataFrame(data=roster_database)
-
-print(roster_full['FULLNAME', 'ALIGNMENT'])

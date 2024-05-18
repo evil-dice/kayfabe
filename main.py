@@ -1,63 +1,43 @@
-# Tutorial stuff from https://www.youtube.com/watch?v=ibf5cx221hk
-import tkinter as tk
+from customtkinter import *
+import sv_ttk
+from tkinter import *
+from tkinter import ttk
+from PIL import Image, ImageTk
+import ttkbootstrap as ttkb
+from ttkbootstrap import constants, Style
+from classes import *
+from functions import *
+from styles import *
 
-app = tk.Tk()
-
-# TODO ... Convert to Custom TKinter later
-# import customtkinter as ctk
-# app = ctk.CTk()
-
-
-
-app.title("Kayfabe")
-app.geometry("800x500")
-
-label = tk.Label(app, text="Hello World", font=('Calibri', 18) )
-label.pack(padx=10, pady=10)
-
-# Multiline Text Box
-textbox = tk.Text(app, height=1, padx = 20, font=('Arial', 14))
-textbox.pack(padx=10, pady=10)
-
-# Entry
-myentry = tk.Entry(app)
-myentry.pack(padx=10, pady=10)
-
-# Set of buttons on grid
-# Grid layout within button frame
-buttonframe = tk.Frame(app)
-buttonframe.columnconfigure(0, weight=1)
-buttonframe.columnconfigure(1, weight=1)
-buttonframe.columnconfigure(2, weight=1)
-
-btn1 = tk.Button(buttonframe, text = "1", font=('Arial', 18))
-btn1.grid(row=0, column=0, sticky=tk.W+tk.E)
-
-btn2 = tk.Button(buttonframe, text = "1", font=('Arial', 18))
-btn2.grid(row=0, column=1, sticky=tk.W+tk.E)
-
-btn3 = tk.Button(buttonframe, text = "1", font=('Arial', 18))
-btn3.grid(row=0, column=2, sticky=tk.W+tk.E)
-
-btn4 = tk.Button(buttonframe, text = "1", font=('Arial', 18))
-btn4.grid(row=1, column=0, sticky=tk.W+tk.E)
-
-btn5 = tk.Button(buttonframe, text = "1", font=('Arial', 18))
-btn5.grid(row=1, column=1, sticky=tk.W+tk.E)
-
-btn6 = tk.Button(buttonframe, text = "1", font=('Arial', 18))
-btn6.grid(row=1, column=2, sticky=tk.W+tk.E)
-
-buttonframe.pack(fill='x')
+# Set TTKbootstrap theme
 
 
-# Widget placement exact positioning
-anotherbtn = tk.Button(app, text="TEST")
-anotherbtn.place(x=200, y=200, height=100, width=100)
+class AppWindow(Tk):
+    def __init__(self, title, size):
+        super().__init__()
 
+        # Title, Icon, Size
+        self.title(title)
+        self.iconbitmap('images/icon.ico')
+        self.geometry(f'{size[0]}x{size[1]}')
+        self.minsize(size[0],size[1])
+        
+        # Set TTKBootstrap style
+        style = Style(theme='newtheme')
+        
+        
+        # Screens
+        #TitleScreen(self)
+        
+        
+        self.NavigationPanel = NavigationPanel(self)
+        self.MainPanel = MainPanel(self, "Start a New Universe")
+        NewUniverse(self.MainPanel)
+        
+        # Main Content Area
 
-# Button
-# button = tk.Button(app, text="Click me!", font=('Arial', 18))
-# button.pack(padx=10, pady=10)
+        # Run App
+        self.mainloop()
 
-app.mainloop()
+# define and instantiate our app
+AppWindow('Squared Circle Universe', (1280,720))

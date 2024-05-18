@@ -1,0 +1,3 @@
+title,logo,timeslot,runtime,GM,brand,matchtable
+Dynamite,images\dynamite.png,Wednesday,120,Tony Khan,AEW,data/matchtables/basic.csv
+Collision,images\dynamite.png,Saturday,120,Tony Khan,AEW,data/matchtables/basic.csv

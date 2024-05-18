@@ -1,0 +1,10 @@
+name;sides;participants;ruleset;
+One on One;2;Normal,Falls Count Anywhere, First Blood, Steel Cage, Hell in a Cell, Iron Man, Ladder, Last Man Standing, No Disqualification, Steel Cage, Submission, TLC, Table;
+Triple Threat;3;Normal,Falls Count Anywhere, First Blood, Steel Cage, Hell in a Cell, Ladder, Submission, TLC, Table;
+Fatal Four-Way;4;Normal,Falls Count Anywhere, First Blood, Steel Cage, Hell in a Cell, Ladder, Submission, TLC, Table;
+Five Man;5;Normal,Falls Count Anywhere, First Blood, Steel Cage, Hell in a Cell, Ladder, Submission, TLC, Table, Handicap (2v3); 
+Six Man;6;Normal,Elimination Chamber, Battle Royal, Ladder, Hell in a Cell, Tag Team, Tornado Tag, Ladder Tag, Table Tag, TLC Tag, Hell in a Cell Tag, Triple Threat Tornado Tag, Ladder Triple Tag, TLC Triple Tag, Hell in a Cell Triple Tag;
+Eight Man;8;Normal,Battle Royal, Ladder, Hell in a Cell, Tag Team, Tornado Tag, Ladder Tag, Table Tag, TLC Tag, Hell in a Cell Tag, Triple Threat Tornado Tag, Ladder Triple Tag, TLC Triple Tag, Hell in a Cell Triple Tag;
+Gauntlet;4;
+Tournament;8;
+Royal Rumble;30;
