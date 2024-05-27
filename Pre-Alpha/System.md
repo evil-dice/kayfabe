@@ -120,3 +120,22 @@ Elements of a "Universe":
 * **"Creative Department" (Angle Editor)**
     * articipant slots
     
+
+
+
+# Screens and Windows
+
+## Main Screen Views
+* Title Screen
+* Company
+* Roster
+* Creative
+* Booking
+* Play Universe
+
+## Pop Up Windows
+* Save and Load Universe
+* Edit Show
+* Edit Event
+* Edit Wrestler
+

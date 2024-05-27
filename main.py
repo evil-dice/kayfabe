@@ -9,8 +9,6 @@ from classes import *
 from functions import *
 from styles import *
 
-# Set TTKbootstrap theme
-
 
 class AppWindow(Tk):
     def __init__(self, title, size):
@@ -24,16 +22,36 @@ class AppWindow(Tk):
         
         # Set TTKBootstrap style
         style = Style(theme='newtheme')
+
+        # Image Handler
+        #ImageHandler(AppWindow)
         
         
         # Screens
+        self.views = {}
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
+        for frame in (TitleScreen, ManageUniverse): # list all the frames in the stack here
+            f = frame(self)
+            f.grid(row=0, column=0, sticky='nsew')
+            self.views[frame] = f
+        self.switch(TitleScreen) # set the starting frame
+
+    def switch(self, frame):
+        self.views[frame].tkraise()
+
+
+
+
         #TitleScreen(self)
         
+        #self.TitleScreen = TitleScreen(self).lift()
+
+
         
-        self.NavigationPanel = NavigationPanel(self)
-        self.MainPanel = MainPanel(self, "Start a New Universe")
-        NewUniverse(self.MainPanel)
+        #self.ManageUniverse = ManageUniverse(self.MainPanel)
         
+
         # Main Content Area
 
         # Run App

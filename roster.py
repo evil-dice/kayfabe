@@ -1,5 +1,6 @@
 # Imports
 import csv
+from csv import DictReader, DictWriter
 
 # Global vars
 
@@ -16,7 +17,6 @@ class Wrestler:
         self.traits = traits
 
 # [Load Roster] Use CSV to populate Roster object with data ... now with file select dialog!
-from csv import DictReader
 import tkinter as TK
 
 FullRoster = list()
@@ -43,6 +43,16 @@ def add_wrestler(name, alignment, workrate, charisma, gimmick, traits):
     new_wrestler = Wrestler(name, alignment, workrate, charisma, gimmick, traits)
     new_wrestler = new_wrestler.__dict__
     FullRoster.append(new_wrestler)
+
+# [Save Roster] Saves the current roster to roster.csv datafile
+def save_roster():
+    keys = FullRoster[0].keys()
+
+    with open("data\roster.csv", 'w', newline='') as datafile:
+        writer = DictWriter(datafile, fieldnames=keys, delimiter=';')
+        writer.writeheader()
+        writer.writerows(FullRoster)
+
 
 # [Filter Roster] Group wrestlers by traits for randomized Angles and Matches
 filtered_roster = []

@@ -1,3 +1,5 @@
-title,logo,timeslot,runtime,GM,brand,matchtable
-Dynamite,images\dynamite.png,Wednesday,120,Tony Khan,AEW,data/matchtables/basic.csv
-Collision,images\dynamite.png,Saturday,120,Tony Khan,AEW,data/matchtables/basic.csv
+showtitle;logo;timeslot;runtime;GM;matchtable;titles
+Rampage;images/genericshow.png;Friday;60;;data/matchtables/basic.csv;data/titles.csv
+Dynamite;images/genericshow.png;Wednesday;120;;data/matchtables/basic.csv;
+Collision;images/genericshow.png;Saturday;120;;data/matchtables/basic.csv;
+RAW;images/genericshow.png;Monday;180;;data/matchtables/basic.csv;
