@@ -1,0 +1,8 @@
+{
+    "name": "World Wrestling Entertainment",
+    "alias": "World Wrestling Entertainment",
+    "logo": "images/wwe.png",
+    "owner": "",
+    "saveslot": 1,
+    "savepath": "savedata\\1"
+}

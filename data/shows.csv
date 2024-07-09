@@ -1,4 +1,4 @@
-showtitle;logo;timeslot;runtime;GM;matchtable;titles
+title;logo;timeslot;runtime;GM;matchtable;championships
 Rampage;images/genericshow.png;Friday;60;;data/matchtables/basic.csv;data/titles.csv
 Dynamite;images/genericshow.png;Wednesday;120;;data/matchtables/basic.csv;
 Collision;images/genericshow.png;Saturday;120;;data/matchtables/basic.csv;

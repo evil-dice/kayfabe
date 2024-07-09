@@ -1,0 +1,9 @@
+{
+    "title": "Rampage",
+    "logo": "images/Rampage.png",
+    "timeslot": "Friday",
+    "runtime": 60,
+    "GM": "Tony Khan",
+    "matchtable": "data/matchtables/basic.csv",
+    "championships": "data/titles.csv"
+}

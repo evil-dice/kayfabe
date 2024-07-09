@@ -1,0 +1,20 @@
+{
+    "Dynamite": {
+        "title": "Dynamite",
+        "logo": "images/dynamite.png",
+        "timeslot": "Wednesday",
+        "runtime": 120,
+        "GM": "Tony Khan",
+        "matchtable": "data/matchtables/basic.csv",
+        "championships": "data/titles.csv"
+    },
+    "Collision": {
+        "title": "Collision",
+        "logo": "images/collision.png",
+        "timeslot": "Saturday",
+        "runtime": 120,
+        "GM": "Tony Khan",
+        "matchtable": "data/matchtables/basic.csv",
+        "championships": "data/titles.csv"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Impact Wrestling",
+    "alias": "Impact Wrestling",
+    "logo": "images/impact.png",
+    "owner": "",
+    "saveslot": 2,
+    "savepath": "savedata\\2"
+}

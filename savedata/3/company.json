@@ -1,0 +1,8 @@
+{
+    "name": "Ring of Honor",
+    "alias": "Ring of Honor",
+    "logo": "images/roh.png",
+    "owner": "",
+    "saveslot": 3,
+    "savepath": "savedata\\3"
+}

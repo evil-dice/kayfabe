@@ -1,6 +1,7 @@
 # Imports
 import csv
 from csv import DictReader, DictWriter
+import json
 
 # Global vars
 
@@ -19,24 +20,42 @@ class Wrestler:
 # [Load Roster] Use CSV to populate Roster object with data ... now with file select dialog!
 import tkinter as TK
 
-FullRoster = list()
-def load_roster():
-    filename = TK.filedialog.askopenfilename(
-        filetypes=(
-            ("CSV files", "*.csv"),
-            ("All Files", "*.*")
-        )
-    )
-    # filename = "\data\testroster.csv"
-    roster = open(filename, 'r')
-    reader = DictReader(roster, delimiter=";")
-    for character in reader:
-        FullRoster.append(character)
-    return FullRoster
+
+Wrestlers = {}
+def import_roster(filename = "data\Testroster.csv"):
+    ''' Imports a CSV file of Wrestlers to your Universe save slot files'''
+    data = open(filename, 'r')
+    input = DictReader(data, delimiter=";")
+    for superstar in input:
+        Name = superstar['name']
+        #del superstar['name']
+        Wrestlers[Name] = Wrestler(**superstar).__dict__
+
+    with open('data\wrestlers.json', 'w') as f:
+        json.dump(Wrestlers, f)
+    return Wrestlers
+
+def export_roster():
+    pass
+
+# FullRoster = list()
+# def load_roster():
+#     # filename = TK.filedialog.askopenfilename(
+#     #     filetypes=(
+#     #         ("CSV files", "*.csv"),
+#     #         ("All Files", "*.*")
+#     #     )
+#     # )
+#     filename = "data\Testroster.csv"
+#     roster = open(filename, 'r')
+#     reader = DictReader(roster, delimiter=";")
+#     for character in reader:
+#         FullRoster.append(character)
+#     return FullRoster
 
 def view_roster():
-    for character in FullRoster:
-        print(character)
+    for wrestler in Wrestlers:
+        print(wrestler)
 
 # [Add Wrestler] Add a wrestler to the roster
 def add_wrestler(name, alignment, workrate, charisma, gimmick, traits):

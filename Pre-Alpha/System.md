@@ -139,3 +139,28 @@ Elements of a "Universe":
 * Edit Event
 * Edit Wrestler
 
+## User Experience
+
+### From Title screen...
+
+#### NEW - Start a new Universe...
+* First opens **Company Editor** [view] - New Company. The details are straightforward. 
+    * On completion, a new Company object is created and a new folder for the Company is made, with blank JSON files for the rest of the universe. 
+
+* Next, the user is taken to the **Build a Show Schedule** [view]. 
+    * This area lists weekly schedule for Shows. 
+    * Will start blank, and self update as Shows are made. 
+    * At least one show is required. 
+ 
+* Next, is the **Event Schedule** [view]. 
+    * This area lists the monthly events schedule. 
+    * Will start blank, and self update as Events are made. 
+    * Each Event is associated with one or more Shows. 
+    * At least one event is required. 
+
+* Next, the user is brought to the **Roster** [view]. 
+    * You can select a CSV or JSON file of wrestlers to import. 
+    * The import completes and each wrestler is shown in a tree view where they can have their individual attributes edited. 
+    
+
+

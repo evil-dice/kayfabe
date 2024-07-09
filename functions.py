@@ -5,9 +5,146 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image,ImageTk
 from pathlib import Path
+import os
 
+
+def load_universe(SaveSlot):
+    global Companies
+    CurrentCompany = Companies[SaveSlot]
+    # load shows
+    load_all_shows(CurrentCompany.savepath)
+    global Shows
+    for show in Shows:
+        print(show.title)
+    # load events
+    # load roster
+    # etc...
 
 PATH = Path(__file__).parent / 'assets'
+
+# widgets
+
+class StaticImageBtn(Frame):
+    def __init__(self, parent, text, filepath, commandtorun, maxsize):
+        super().__init__(parent)
+        # build container
+
+        # open image
+        file = Image.open(filepath)
+        file.thumbnail((maxsize, maxsize))
+        self.img = ImageTk.PhotoImage(file)
+
+        render = ttk.Button(self, text=text, image=self.img, compound=TOP, command=commandtorun, style='dark.TButton')
+        render.pack(expand=True, fill='both')
+
+class UploadableImage(Frame):
+    def __init__(self, parent, filepath, maxsize):
+        super().__init__(parent)
+        # build container
+
+        # open image
+        file = Image.open(filepath)
+        file.thumbnail((maxsize, maxsize))
+        self.img = ImageTk.PhotoImage(file)
+        self.render = Label(self, text='', image=self.img)
+        self.render.pack(expand=True, fill='both')
+
+        # browse button
+        browse = ttk.Button(self, text='Browse', command=lambda: self.browse(maxsize))
+        browse.pack(padx=5, fill='x', expand=True)
+
+    def browse(self, maxsize):
+        fileTypes = [("Image files", "*.png;*.jpg;*.jpeg;*.gif;*.tif")]
+        filepath = filedialog.askopenfilename(filetypes=fileTypes)
+
+        # if file is selected
+        if len(filepath):
+            file = Image.open(filepath)
+            file.thumbnail((maxsize, maxsize))
+            self.updatedimg = ImageTk.PhotoImage(file)
+            self.render.configure(image=self.updatedimg)
+
+class StaticImage(Frame):
+    def __init__(self, parent, filepath, maxsize):
+        super().__init__(parent)
+        # build container
+
+        # open image
+        file = Image.open(filepath)
+        file.thumbnail((maxsize, maxsize))
+        # elif self.file.size[0] < parent.winfo_width:
+
+        self.img = ImageTk.PhotoImage(file)
+        render = Label(self, text='', image=self.img)
+        render.pack(expand=True, fill='both')
+
+class ResizableImage(Frame):
+    def __init__(self, parent, filepath):
+        super().__init__(parent)
+        # build container
+        # self.pack(expand=True, fill='both')
+
+        # display image
+        self.file = Image.open(filepath)
+        self.file_copy = self.file.copy()
+        self.img = ImageTk.PhotoImage(self.file)
+        self.render = Label(self, text='', image=self.img)
+        self.render.pack(side=RIGHT, anchor='nw', expand=True, fill='both')
+
+        self.render.bind('<Configure>', self.resize_image)
+
+    def resize_image(self, event):
+        # get original size and aspect ratio
+        OrigSize = (self.winfo_width(), self.winfo_height())
+        AspectRatio = (OrigSize[0] / OrigSize[1])
+
+        # resize image with aspect ratio
+        # Calculate new size keeping the aspect ratio
+        if (self.winfo_width() / self.winfo_height()) > AspectRatio:
+            new_width = int(self.winfo_height() * AspectRatio)
+            new_height = self.winfo_height()
+        else:
+            new_width = self.winfo_width()
+            new_height = int(self.winfo_width() / AspectRatio)
+
+        # Resize the image...FIX THIS AND WERE GOOD TO GO
+        self.file = self.file_copy.resize((new_width, new_height), Image.LANCZOS)
+        self.img = ImageTk.PhotoImage(self.file)
+        self.render.configure(image=self.img)
+
+class ResizableImageBtn(Frame):
+    def __init__(self, parent, text, filepath, commandtorun):
+        super().__init__(parent)
+        # build container
+        # self.pack(expand=True, fill='both')
+
+        # display image
+        self.file = Image.open(filepath)
+        self.file_copy = self.file.copy()
+        self.img = ImageTk.PhotoImage(self.file)
+        self.render = Button(self, text=text, image=self.img, compound='top', command=commandtorun)
+        
+
+        self.render.bind('<Configure>', self.resize_image)
+
+    def resize_image(self, event):
+        # get original size and aspect ratio
+        OrigSize = (self.winfo_width(), self.winfo_height())
+        AspectRatio = (OrigSize[0] / OrigSize[1])
+
+        # resize image with aspect ratio
+        # Calculate new size keeping the aspect ratio
+        if (self.winfo_width() / self.winfo_height()) > AspectRatio:
+            new_width = int(self.winfo_height() * AspectRatio)
+            new_height = self.winfo_height()
+        else:
+            new_width = self.winfo_width()
+            new_height = int(self.winfo_width() / AspectRatio)
+
+        # Resize the image...FIX THIS AND WERE GOOD TO GO
+        self.file = self.file_copy.resize((new_width, new_height), Image.LANCZOS)
+        self.img = ImageTk.PhotoImage(self.file)
+        self.render.configure(image=self.img)
 
 class EditableLabel(Label):
     def __init__(self, parent, *args, **kwargs):
@@ -30,70 +167,226 @@ class EditableLabel(Label):
         self.entry.delete(0, "end")
         self.entry.place_forget()
 
-class img(Canvas):
-    def __init__(self, parent, file, width, height):
-        super().__init__(parent, file, width, height)
-        img_canvas = Canvas(self, width=width, height=height)
-        img_canvas.pack(expand=True, fill='both')
-        img_canvas.img_file = ImageTk.PhotoImage(file=file)
-        img_canvas.create_image(0, 0, image=img_canvas.img_file, anchor='center')
-    def stretch_image(event):
-        # size
-        width = event.width
-        height = event.height
-        #create an image
-        resized_img = img_original.resize((width, height))
-        resized_tk = ImageTk.PhotoImage(resized_img)
 
-        # place on the canvas
-        canvas.create_image(0,0,image=resized_tk, anchor='nw')
+# styles
+def set_styles(style):
+    global fonts, stylesheet, space, frames, buttons
 
-class graphic(Frame):
-    def __init__(self, parent, file, width, height):
-        super().__init__(parent, file, width, height)
+    fonts = {
+        'headers': 'Freedom45',
+        'body': 'Lato',
+        'stylized': 'Royal Rumble'
+    }
 
-        self.file = file
-        self.width = width
-        self.height = height
+    stylesheet = {
+        'h1': {'style': 'h1.TLabel', 'font': (fonts['headers'], 36), 'anchor': 'w', 'justify': 'left'},
+        'h2': {'style': 'h2.TLabel', 'font': (fonts['headers'], 24), 'anchor': 'w', 'justify': 'left'},
+        'body': {'style': 'body.TLabel', 'font': (fonts['body'], 12), 'anchor': 'w', 'justify': 'left'},
+        'field': {'style': 'field.TLabel', 'font': (fonts['body'], 12), 'anchor': 'w', 'justify': 'left', 'width': 15},
+        'schedule': {'style': 'schedule.TLabel', 'font': (fonts['stylized'], 26), 'anchor': 'center', 'justify': 'center'},
+        'companyselect': {'style': 'companyselect.TCombobox', 'font': (fonts['body'], 20), 'anchor': 'center', 'arrowsize': 25},
+        'nav': {'style': 'nav.TButton', 'font': (fonts['stylized'], 20), 'anchor': 'center', 'justify': 'center'}
+    }
 
-        # build + show logo frame
-        ShowGraphicFrame = Frame(self, relief='solid', borderwidth=1)
-        ShowGraphicFrame.pack()
+    buttons = {
+        'slot': {'style': 'slot.TButton', 'font': (fonts['headers'], 20), 'anchor': 's', 'justify': 'center'}
+    }
 
-        # add graphic canvas
-        img_canvas = Canvas(ShowGraphicFrame, width=width, height=height)
-        img_canvas.pack(expand=True, fill='both')
-        img_canvas.img_file = ImageTk.PhotoImage(file=graphic)
-        img_canvas.create_image(0, 0, image=img_canvas.img_file, anchor=NW)
+    space = {
+        'h1': {'padx': 0, 'pady': (0,10), 'expand': 'False', 'fill': 'x'},
+        'h2': {'padx': 0, 'pady': (0,10), 'expand': 'False', 'fill': 'x'},
+        'body': {'padx': 0, 'pady': (0,20), 'expand': 'False', 'fill': 'x'},
+        'entry': {'padx': 20, 'pady': (0,20), 'expand': 'False', 'fill': 'x'}
+    }
+
+    frames = {
+        'blackBG': {'background': '000000'}
+    }
+    
+    for element in stylesheet.values():
+        style.configure(**element)
 
 
-def detailsbox(parent, header, text):
-    '''Create a single form entry'''
-    container = Frame(parent)
-    container.pack(fill='x', expand=False, pady=5)
+class section_details(Frame):
+    def __init__(self, parent, header, text):
+        super().__init__(parent)
+        '''Create a header and brief description'''
+        # container = Frame(parent)
+        # container.pack(fill='x', expand=False, pady=5)
 
-    # entrytext=ttk.Style()
-    # entrytext.configure('TLabel', font=('Convection',12))
+        header = ttk.Label(self, text=header, style='h1.TLabel')
+        header.pack(side=TOP)
+        header.bind('<Configure>', lambda e: header.config(wraplength=header.winfo_width()))
 
-    lbl = ttk.Label(container, text=header.title(), style='TLabel')
-    lbl.pack(side=TOP, padx=5)
+        if text:
+            header.pack(side=TOP, **space['h1'])
+            bodytext = ttk.Label(self, text=text, style='body.TLabel')
+            bodytext.pack(side=TOP, **space['body'])
+            bodytext.bind('<Configure>', lambda e: bodytext.config(wraplength=bodytext.winfo_width()))
 
-    body = ttk.Label(container, text=text.title())
-    body.pack(side=TOP, padx=5)
+# ??? Should I redefine datafields as classes to try and directly address data content? 
 
 def datafield(parent, label, variable):
-    '''Create a single form entry'''
+    '''Create a single form entry with either Stringvar or IntVar.'''
+    # build container
     container = Frame(parent)
     container.pack(fill='x', expand=False, pady=5)
 
-    entrytext=ttk.Style()
-    entrytext.configure('TLabel', font=('Convection',12))
+    # create label
+    entrylbl = ttk.Label(container, text=label.title()+": ", style='field.TLabel', width=15)
+    entrylbl.pack(side=LEFT, padx=5, fill='both', expand=True)
 
-    lbl = ttk.Label(container, text=label.title()+": ", width=15, style='TLabel')
-    lbl.pack(side=LEFT, padx=5)
+    # # create TK special variable
+    # if Int == False:
+    #     EditorVars[label] = StringVar()
+    #     EditorVars[label].set(variable)
+    # elif Int == True:
+    #     EditorVars[label] = IntVar()
+    #     EditorVars[label].set(variable)
 
+    # create entry field
     ent = ttk.Entry(container, textvariable=variable)
+    # ent.delete(0, END)
+    # ent.insert(0, value)
     ent.pack(side=LEFT, padx=5, fill='x', expand=True)
+
+
+def datafield_image(parent, label, variable, imagefile, maxsize):
+    '''Create an image with an update button to edit it.'''
+    # build container
+    container = Frame(parent)
+    container.pack(fill='x', expand=False, pady=5)
+
+    # create label
+    labelframe = ttk.LabelFrame(container, text=label.title())
+    labelframe.pack(side=LEFT, padx=5, pady=5, fill='x', expand=False)
+
+    # create image from original value
+    img = StaticImage(labelframe, imagefile, maxsize)
+    img.pack()
+
+    # browse button
+    browse = ttk.Button(labelframe, text='Browse', command=lambda: browsebtn())
+    browse.pack(padx=5, fill='x', expand=True)
+
+    def browsebtn():
+        fileTypes = [("Image files", "*.png;*.jpg;*.jpeg;*.gif;*.tif")]
+        filepath = filedialog.askopenfilename(filetypes=fileTypes)
+
+        # if file is selected
+        if len(filepath):
+            img = StaticImage(labelframe, filepath, maxsize)
+            img.pack()
+    
+
+
+
+def datafield_file(parent, label, variable):
+    '''Create a single form entry'''
+    # build container
+    container = Frame(parent)
+    container.pack(fill='x', expand=False, pady=5)
+
+    # create label
+    entrylbl = ttk.Label(container, text=label.title()+": ", style='field.TLabel', width=15)
+    entrylbl.pack(side=LEFT, padx=5, fill='x', expand=False)
+
+    # create TK special variable
+    # EditorVars[label] = StringVar()
+    # EditorVars[label].set(variable)
+
+    # create entry field
+    ent = ttk.Entry(container, textvariable=variable)
+    # ent.delete(0, END)
+    # ent.insert(0, value)
+    ent.pack(side=LEFT, padx=5, fill='x', expand=True)
+
+    # browse button
+    browse = ttk.Button(container, text='Browse', command=lambda: browsebtn())
+    browse.pack(side=LEFT, padx=5, fill='x', expand=True)
+
+    def browsebtn():
+        fileTypes = [("Image files", "*.png;*.jpg;*.jpeg;*.gif;*.tif")]
+        filepath = filedialog.askopenfilename(filetypes=fileTypes)
+        ent.delete(0, END)
+        ent.insert(END, filepath) # add this
+
+        # get new image name to update image
+        # ent.get()
+
+    # def imageUploader():
+    #     fileTypes = [("Image files", "*.png;*.jpg;*.jpeg")]
+    #     path = filedialog.askopenfilename(filetypes=fileTypes)
+    
+    #     # if file is selected
+    #     if len(path):
+    #         img = Image.open(path)
+    #         img = img.resize((200, 200))
+    #         pic = ImageTk.PhotoImage(img)
+    
+    #         # re-sizing the app window in order to fit picture
+    #         # and buttom
+    #         app.geometry("560x300")
+    #         label.config(image=pic)
+    #         label.image = pic
+ 
+    # # if no file is selected, then we are displaying below message
+    # else:
+    #     print("No file is Choosen !! Please choose a file.")
+    
+
+
+def datafield_dropdown(parent, label, variable, valuelist, Int=False):
+    '''Create a single form entry with a combo box'''
+    container = Frame(parent)
+    container.pack(fill='x', expand=False, pady=5)
+
+    entrylbl = ttk.Label(container, text=label.title()+": ", style='field.TLabel', width=15)
+    entrylbl.pack(side=LEFT, padx=5, fill='x', expand=False)
+
+    # if Int == False:
+    #     EditorVars[label] = StringVar()
+    #     EditorVars[label].set(variable)
+    # elif Int == True:
+    #     EditorVars[label] = IntVar()
+    #     EditorVars[label].set(variable)
+
+    ent = ttk.Combobox(container, textvariable=variable, values=valuelist, style='CompanySelect.TCombobox')
+    # ent.set(value)
+    ent.pack(side=LEFT, padx=5, fill='x', expand=True)
+
+
+def datafield_options(parent, label, variable, btnvariable, btnText, btnValues):
+    '''Create a single form entry with radio buttons for options'''
+    container = Frame(parent)
+    container.pack(fill='x', expand=False, pady=5)
+
+    entrylbl = ttk.Label(container, text=label.title()+": ", style='field.TLabel', width=15)
+    entrylbl.pack(side=LEFT, padx=(5,10), fill='x', expand=False)
+
+    # if Int == False:
+    #     EditorVars[label] = StringVar()
+    #     EditorVars[label].set(variable)
+    # elif Int == True:
+    #     EditorVars[label] = IntVar()
+    #     EditorVars[label].set(variable)
+
+    for button, value in zip(btnText, btnValues):
+        rbtn = ttk.Radiobutton(container, text=button, textvariable=variable, variable=btnvariable, value=value, style='light.Outline.Toolbutton')
+        rbtn.pack(side=LEFT, fill='x', expand=True)
+
+
+def FormButtons(parent, **kwargs):
+    '''Generic buttons to Add, Save, or Delete the relevant item in saved datafiles'''
+    container = Frame(parent)
+    container.pack(fill='x', expand=True, padx=20, pady=20, anchor='center')
+
+    for key, value in kwargs.items():
+        btn = ttk.Button(container, text=key, command=value)
+        btn.pack(side=LEFT, anchor='center', padx=5, expand=True, fill='x')
+        
+    cancel = ttk.Button(container, text="Cancel", command=parent.destroy)
+    cancel.pack(side=LEFT, anchor='center', padx=5, expand=True, fill='x')
 
 def datafield_alt(parent, label, variable):
     '''Create a single form entry'''
@@ -109,93 +402,19 @@ def datafield_alt(parent, label, variable):
     ent = ttk.Entry(container, textvariable=variable)
     ent.pack(side=TOP, padx=5, fill='x', expand=True)
 
-
-
-
-
-# For Reference below here, not used
-class DataEntryForm(ttk.Frame):
-
-    def __init__(self, master):
-        super().__init__(master, padding=(20, 10))
-        self.pack(fill=BOTH, expand=YES)
-
-        # form variables
-        self.name = ttk.StringVar(value="")
-        self.address = ttk.StringVar(value="")
-        self.phone = ttk.StringVar(value="")
-
-        # form header
-        hdr_txt = "Please enter your contact information" 
-        hdr = ttk.Label(master=self, text=hdr_txt, width=50)
-        hdr.pack(fill=X, pady=10)
-
-        # form entries
-        self.create_form_entry("name", self.name)
-        self.create_form_entry("address", self.address)
-        self.create_form_entry("phone", self.phone)
-        self.create_buttonbox()
-
-    def create_form_entry(self, label, variable):
-        """Create a single form entry"""
-        container = ttk.Frame(self)
-        container.pack(fill=X, expand=YES, pady=5)
-
-        lbl = ttk.Label(master=container, text=label.title(), width=10)
-        lbl.pack(side=LEFT, padx=5)
-
-        ent = ttk.Entry(master=container, textvariable=variable)
-        ent.pack(side=LEFT, padx=5, fill=X, expand=YES)
-
-    def create_buttonbox(self):
-        """Create the application buttonbox"""
-        container = ttk.Frame(self)
-        container.pack(fill=X, expand=YES, pady=(15, 10))
-
-        sub_btn = ttk.Button(
-            master=container,
-            text="Submit",
-            command=self.on_submit,
-            #bootstyle=SUCCESS,
-            width=6,
-        )
-        sub_btn.pack(side=RIGHT, padx=5)
-        sub_btn.focus_set()
-
-        cnl_btn = ttk.Button(
-            master=container,
-            text="Cancel",
-            command=self.on_cancel,
-            #bootstyle=DANGER,
-            width=6,
-        )
-        cnl_btn.pack(side=RIGHT, padx=5)
-
-    def on_submit(self):
-        """Print the contents to console and return the values."""
-        print("Name:", self.name.get())
-        print("Address:", self.address.get())
-        print("Phone:", self.phone.get())
-        return self.name.get(), self.address.get(), self.phone.get()
-
-    def on_cancel(self):
-        """Cancel and close the application."""
-        self.quit()
-
-
-# class ImageHandler(Frame):
-#     def __init__(self, parent):
-#         super().__init__()
-#         image_files = {
-#             'appLogo': 'KayfabeLogo.png',
-#             'genericShow': 'genericshow.png',
-#             'genericCompany': 'genericcompany.png',
-#             'genericWrestler': 'genericwrestler.png',
-#             'genericEvent': 'genericevent.png'
-#         }
-
-#         self.photoimages = []
-#         imgpath = Path(__file__).parent / 'images'
-#         for key, val in image_files.items():
-#             _path = imgpath / val
-#             self.photoimages.append(PhotoImage(name=key, file=_path))
+# lifted from online, modify to fit our use case for uploading show logos
+def imageUploader(imageObj):
+    fileTypes = [("Image files", "*.png;*.jpg;*.jpeg;*.gif;*.tif")]
+    path = filedialog.askopenfilename(filetypes=fileTypes)
+ 
+    # if file is selected
+    if len(path):
+        img = Image.open(path)
+        img = img.resize((256, 256))
+        pic = ImageTk.PhotoImage(img)
+        imageObj.config(image=pic)
+        imageObj.image = pic
+ 
+    # # if no file is selected, then we are displaying below message
+    # else:
+    #     print("No file is Choosen !! Please choose a file.")

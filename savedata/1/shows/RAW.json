@@ -1,0 +1,9 @@
+{
+    "title": "RAW",
+    "logo": "images/RAW.png",
+    "timeslot": "Monday",
+    "runtime": 180,
+    "GM": "Triple H",
+    "matchtable": "data/matchtables/basic.csv",
+    "championships": "data/titles.csv"
+}

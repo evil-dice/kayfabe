@@ -1,0 +1,9 @@
+{
+    "title": "Collision",
+    "logo": "images/Collision.png",
+    "timeslot": "Saturday",
+    "runtime": 120,
+    "GM": "Tony Khan",
+    "matchtable": "data/matchtables/basic.csv",
+    "championships": "data/titles.csv"
+}

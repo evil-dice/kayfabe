@@ -1,0 +1,9 @@
+{
+    "title": "Smackdown",
+    "logo": "images/genericshow.png",
+    "timeslot": "Thursday",
+    "runtime": 120,
+    "GM": "",
+    "matchtable": "data/matchtables/basic.csv",
+    "championships": "data/titles.csv"
+}
