@@ -28,7 +28,7 @@ class AppWindow(Tk):
         
         # Set TTKBootstrap style
         global style
-        style = Style(theme='newtheme')
+        style = Style(theme='darkly')
         set_styles(style)
         
         
