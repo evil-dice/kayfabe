@@ -22,7 +22,7 @@ class AppWindow(Tk):
 
         # Title, Icon, Sizez
         self.title(title)
-        self.iconbitmap('images/icon.ico')
+        # self.iconbitmap('images/icon.ico')
         self.geometry(f'{size[0]}x{size[1]}')
         self.minsize(size[0],size[1])
         
