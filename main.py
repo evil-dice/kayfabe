@@ -5,9 +5,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from state.universe import Universe
-from ui.widgets.navbar import SimpleNavBar
-from ui.views.title_screen import TitleScreen
-from ui.views.CompanyEditor import CompanyEditor
+from core.widgets.navbar import SimpleNavBar
+from shell.title_screen import TitleScreen
+from companies.views.editor_nobase import CompanyEditor
 
 class WrestleVerseApp(App):
     def build(self):
