@@ -2,6 +2,7 @@
 
 from kivy.event import EventDispatcher
 from kivy.properties import StringProperty, ListProperty, ObjectProperty, BooleanProperty
+# from companies.manager import CompanyManager
 
 class Universe(EventDispatcher):
     active_screen = StringProperty("title")

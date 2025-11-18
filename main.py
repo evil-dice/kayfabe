@@ -7,7 +7,7 @@ from kivy.core.window import Window
 from state.universe import Universe
 from core.widgets.navbar import SimpleNavBar
 from shell.title_screen import TitleScreen
-from companies.views.editor_nobase import CompanyEditor
+from companies.views.editor_withbase import CompanyEditor
 
 class WrestleVerseApp(App):
     def build(self):
@@ -23,9 +23,9 @@ class WrestleVerseApp(App):
         root.add_widget(sm)
 
         def toggle_nav(_, screen_name):
-            if screen_name == "title" and nav in root.children:
+            if screen_name == "title":
                 root.remove_widget(nav)
-            elif screen_name != "title" and nav not in root.children:
+            elif screen_name != "title":
                 root.add_widget(nav, index=len(root.children))  # Add at top
 
         Universe().bind(active_screen=toggle_nav)

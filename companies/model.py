@@ -1,6 +1,6 @@
 # core/company.py
 # Company represents the meta data and save slot of a Universe. 
-
+from config.config import SAVEPATH
 from pathlib import Path
 
 class Company:
@@ -10,7 +10,11 @@ class Company:
         self.logo = logo
         self.owner = owner
         self.saveslot = saveslot
-        self.savepath = Path(f"savedata/{self.saveslot}") if saveslot is not None else None
+        self.savepath = Path(f"{SAVEPATH}/{self.saveslot}") if saveslot is not None else None
+    
+    def __str__(self):
+        '''Return a clear string'''
+        return f"Company(name={self.name}, owner={self.owner}, logo={self.logo}, slot={self.saveslot})"
 
     def to_dict(self):
         return {

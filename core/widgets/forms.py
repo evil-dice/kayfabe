@@ -83,10 +83,10 @@ class FieldRow(BoxLayout):
 
 class ButtonRow(BoxLayout):
     def __init__(self, **kwargs):
-        super().__init__()
+        super().__init__(orientation = 'horizontal', pos_hint = {'center_x': 0.5, 'center_y': 0.5})
         
         # Set properties
-        self.orientation = 'horizontal'
+        # self.orientation = 'horizontal'
         self.spacing = 10
         self.size_hint_x = 1
         self.size_hint_y = None
