@@ -1,0 +1,18 @@
+{
+    "name": "Kenny Omega",
+    "alignment": "face",
+    "keywords": [
+        "athletic",
+        "technical",
+        "main-event"
+    ],
+    "stats": {
+        "workrate": 4,
+        "charisma": 3,
+        "technique": 4
+    },
+    "description": "Elite athlete with a god complex",
+    "catchphrase": "Goodbye and good night",
+    "momentum": 0,
+    "alignment_score": 0.0
+}
