@@ -6,8 +6,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from state.universe import Universe
 from core.widgets.navbar import SimpleNavBar
-from shell.title_screen import TitleScreen
-from companies.views.editor_withbase import CompanyEditor
+# from shell.title_screen import TitleScreen
+from core.views.title_screen import TitleScreen
+from companies.views.editor_new import CompanyEditor
 
 class WrestleVerseApp(App):
     def build(self):
@@ -16,21 +17,11 @@ class WrestleVerseApp(App):
         sm.add_widget(TitleScreen(name="title"))
         sm.add_widget(CompanyEditor(name="company_editor"))
 
-        nav = SimpleNavBar(screen_names=["title", "company_editor"], screen_manager=sm)
+        # nav = SimpleNavBar(screen_names=["title", "company_editor"], screen_manager=sm)
 
         root = BoxLayout(orientation='vertical')
-        root.add_widget(nav)
+        # root.add_widget(nav)
         root.add_widget(sm)
-
-        def toggle_nav(_, screen_name):
-            if screen_name == "title":
-                root.remove_widget(nav)
-            elif screen_name != "title":
-                root.add_widget(nav, index=len(root.children))  # Add at top
-
-        Universe().bind(active_screen=toggle_nav)
-        Universe().active_screen = "title"
-
         return root
 
 if __name__ == "__main__":
