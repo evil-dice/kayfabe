@@ -1,27 +1,15 @@
 # Framework
-from kivy.uix.screenmanager import Screen
-from kivy.uix.boxlayout     import BoxLayout
-from kivy.uix.floatlayout   import FloatLayout
-from kivy.uix.gridlayout    import GridLayout
-from kivy.uix.button        import Button
-from kivy.graphics          import Rectangle, Color
-from kivy.core.window       import Window
-from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.label         import Label
-from kivy.uix.scrollview    import ScrollView
-
+from kivy.uix.screenmanager       import Screen
+from kivy.graphics                import Rectangle, Color
+from kivy.core.window             import Window
+from kivy.uix.relativelayout      import RelativeLayout
 
 # Modules
-from companies.model        import Company 
-from companies.manager      import CompanyManager
-from state.universe         import Universe
-from core.views.load_company import UniverseSelector
-# from companies.widgets.company_selector import CompanySelector
-from core.widgets.panel     import Panel
-from core.widgets.labels    import BodyLabel, FieldLabel
-from core.widgets.tile      import Tile
-from core.widgets.saveslot  import SaveSlot, NewSaveSlot
-from core.widgets.buttons   import MainMenuButton
+from companies.manager            import CompanyManager
+from core.views.universe_selector import UniverseSelector
+from core.widgets.panel           import Panel
+from core.widgets.labels          import BodyLabel, FieldLabel
+from core.widgets.buttons         import MainMenuButton
 
 
 class TitleScreen(Screen):
