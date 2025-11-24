@@ -59,6 +59,7 @@ class CompanyManager:
                 self._companies.append(company)
 
                 # Update Universe singleton
+                # self.select(company)
                 Universe().current_company = company
 
                 print(f"{Universe().current_company.name} successfully loaded to Universe")
@@ -66,6 +67,35 @@ class CompanyManager:
 
     def load_all(self):
         pass
+
+    def list_slots(self):
+        """Return lightweight metadata for all save slots."""
+        root = Path(SAVEPATH)
+        slots = []
+        for folder in root.iterdir():
+            if folder.is_dir() and (folder / "company.json").exists():
+                with open(folder / "company.json", "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    slots.append({
+                        "slot": int(folder.name),
+                        "name": data.get("name"),
+                        "alias": data.get("alias"),
+                        "logo": data.get("logo"),
+                    })
+            else:
+                # If no company.json, treat as empty slot
+                slots.append({
+                    "slot": int(folder.name),
+                    "name": None,
+                    "alias": None,
+                    "logo": None,
+                })
+        return sorted(slots, key=lambda s: s["slot"])
+
+    def select(self, company):
+        """Sets a company as the current one."""
+        Universe().current_company = company
+
 
     # def select(self, index):
     #     if 0 <= index < len(self._companies):
