@@ -1,1 +1,6 @@
+__pycache__/
 */__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+*.cpython-311.pyc
+core/widgets/__pycache__/
