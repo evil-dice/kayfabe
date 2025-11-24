@@ -15,6 +15,7 @@ from kivy.uix.scrollview    import ScrollView
 from companies.model        import Company 
 from companies.manager      import CompanyManager
 from state.universe         import Universe
+from core.views.load_company import UniverseSelector
 # from companies.widgets.company_selector import CompanySelector
 from core.widgets.panel     import Panel
 from core.widgets.labels    import BodyLabel, FieldLabel
@@ -43,6 +44,8 @@ class TitleScreen(Screen):
 
         # Main Menu
         self.MainMenu_Label = BodyLabel("Select an option to get started:", halign="center")
+
+        # Define buttons
         self.MainMenu_New = MainMenuButton(text="NEW", label_to_update=self.MainMenu_Label, hover_text="Start a new universe.")
         self.MainMenu_Continue = MainMenuButton(text="CONTINUE", label_to_update=self.MainMenu_Label, hover_text="Pick up where you left off.")
         self.MainMenu_Load = MainMenuButton(text="LOAD", label_to_update=self.MainMenu_Label, hover_text="Choose a Universe.")
@@ -50,6 +53,10 @@ class TitleScreen(Screen):
         self.MainMenu_Export = MainMenuButton(text="EXPORT", label_to_update=self.MainMenu_Label, hover_text="Save your Universe to share with others.")
         self.MainMenu_Version = FieldLabel("Version 0.1", halign="center")
 
+        # Assign methods
+        self.MainMenu_Load.bind(on_release=self.show_universe_selector)
+
+        # Add buttons
         self.content.add_widget(self.MainMenu_Label)
         self.content.add_widget(self.MainMenu_New)
         self.content.add_widget(self.MainMenu_Continue)
@@ -59,7 +66,7 @@ class TitleScreen(Screen):
         self.content.add_widget(self.MainMenu_Version)
 
         # Get company metadata
-        self.companies = CompanyManager().list_slots()
+        self.companies = CompanyManager().list_slots
 
         # # Add "New" slot
         # self.new_company = NewSaveSlot(on_add=None, size_hint_y=1)
@@ -69,26 +76,8 @@ class TitleScreen(Screen):
         self.bg_rect.pos = self.pos
         self.bg_rect.size = self.size
 
-    def manage_company(self, company):
-        print(f"Managing company: {company.name}")
+    def show_universe_selector(self, instance):
+        self.universe_select = UniverseSelector()
+        self.universe_select.open()
 
-    def play_company(self, company):
-        Universe().company = company
-        Universe().initialize()
-        print(f"Playing company: {company.name}")
 
-    def delete_company(self, index):
-        company = self.company_manager.get(index)
-        name = company.name
-        self.company_manager.delete(index)
-        self.company_manager.save_all()
-        self.selector.refresh()
-        print(f"🗑️ Deleted company: {name}")
-    
-    def create_new_company(self):
-        print("🆕 Creating a new company...")
-        Universe().company = Company(name="", owner="", saveslot=self.company_manager.count())
-        self.manager.current = "company_editor"
-
-    def launch_editor(self, company):
-        print(f"🛠️ Launching editor for {company.name}")
