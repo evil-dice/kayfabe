@@ -3,13 +3,16 @@ from kivy.uix.screenmanager       import Screen
 from kivy.graphics                import Rectangle, Color
 from kivy.core.window             import Window
 from kivy.uix.relativelayout      import RelativeLayout
+from kivy.uix.floatlayout      import FloatLayout
 
 # Modules
 from companies.manager            import CompanyManager
+from companies.views.company_editor import CompanyEditor
 from core.views.universe_selector import UniverseSelector
 from core.widgets.panel           import Panel
 from core.widgets.labels          import BodyLabel, FieldLabel
 from core.widgets.buttons         import MainMenuButton
+from state.universe               import Universe
 
 
 class TitleScreen(Screen):
@@ -23,11 +26,11 @@ class TitleScreen(Screen):
         self.bind(size=self.update_bg, pos=self.update_bg)
 
         # UI Layer
-        self.root = RelativeLayout()
+        self.root = FloatLayout()
         self.add_widget(self.root)
 
         # Content area
-        self.content = Panel(orientation='vertical', size_hint=(0.35, 0.4), pos_hint={'center_x':0.29, 'center_y':0.35}, spacing=2, radius=[20])
+        self.content = Panel(orientation='vertical', real_size_hint=(0.35, 0.4), pos_hint={'center_x':0.29, 'center_y':0.35}, spacing=2, radius=[20])
         self.root.add_widget(self.content)
 
         # Main Menu
@@ -42,6 +45,7 @@ class TitleScreen(Screen):
         self.MainMenu_Version = FieldLabel("Version 0.1", halign="center")
 
         # Assign methods
+        self.MainMenu_New.bind(on_release=self.new_universe)
         self.MainMenu_Load.bind(on_release=self.show_universe_selector)
 
         # Add buttons
@@ -68,4 +72,10 @@ class TitleScreen(Screen):
         self.universe_select = UniverseSelector()
         self.universe_select.open()
 
+    def new_universe(self, instance):
+        # call create new universe
+        CompanyManager().new()
+
+        # call editor with new universe loaded
+        Universe().active_screen = "company_editor"
 
