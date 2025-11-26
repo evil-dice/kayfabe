@@ -1,92 +1,66 @@
+# company_editor.py
+
 from kivy.uix.screenmanager import Screen
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.image import Image
-from kivy.uix.label import Label
-from kivy.uix.button import Button
-from companies.model import Company
-from companies.manager import CompanyManager
+from kivy.graphics import Rectangle, Color
+from kivy.core.window import Window
+from core.widgets.imageselect import ImagePreview
+
+from core.widgets.panel import Panel
+from core.widgets.labels import FieldLabel
 from state.universe import Universe
+from core.widgets.labels import HeaderLabel, BodyLabel
+from core.widgets.forms import FieldRow  # your improved FieldRow
+from core.widgets.forms import ImageFieldRow
+from core.widgets.imageselectwithpreview import ImagePreview
+from core.widgets.containers import Row
 
 class CompanyEditor(Screen):
-    def __init__(self, company=None, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.company = company or Company(name="", owner="", saveslot=self.get_next_slot())
-        self.manager = CompanyManager()
 
-        # Layout
-        layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
-        self.add_widget(layout)
+        # Get the current company from Universe
+        self.company = Universe().company
 
-        # Fields
-        self.name_input = TextInput(text=self.company.name, hint_text="Company Name", multiline=False)
-        self.alias_input = TextInput(text=getattr(self.company, "alias", ""), hint_text="Alias", multiline=False)
-        self.owner_input = TextInput(text=self.company.owner, hint_text="Owner", multiline=False)
-        self.logo_input = TextInput(text=self.company.logo, hint_text="Logo Path", multiline=False)
+        # Background Layer
+        with self.canvas.before:
+            self.bg_color = Color(1, 1, 1, 1)
+            self.bg_rect = Rectangle(source="assets/images/company.png", pos=self.pos, size=Window.size)
+        self.bind(size=self.update_bg, pos=self.update_bg)
 
-        layout.add_widget(Label(text="Company Name"))
-        layout.add_widget(self.name_input)
-        layout.add_widget(Label(text="Alias"))
-        layout.add_widget(self.alias_input)
-        layout.add_widget(Label(text="Owner"))
-        layout.add_widget(self.owner_input)
-        layout.add_widget(Label(text="Logo Path"))
-        layout.add_widget(self.logo_input)
+        # UI Layer
+        root = FloatLayout()
+        self.add_widget(root)
 
-        # Logo preview
-        self.logo_preview = Image(source=self.company.logo, size_hint=(None, None), size=(200, 200))
-        layout.add_widget(self.logo_preview)
+        # Panel
+        form = Panel(padding=30, shrink_to_fit=True, size_hint_x=0.3, pos_hint = {'center_x': 0.3, 'center_y': 0.5})
+        root.add_widget(form)
 
-        # Save button
-        save_btn = Button(text="Save Company", size_hint=(1, None), height=50)
-        save_btn.bind(on_release=self.save_company)
-        layout.add_widget(save_btn)
+        # Form title
+        form.add_widget(HeaderLabel(text="Company Details", halign="left"))
 
-        # Update logo preview on change
-        self.logo_input.bind(text=self.update_logo_preview)
+        # Add FieldRows bound to company attributes
+        form.add_widget(FieldRow("Name", target=self.company, attr="name"))
+        form.add_widget(FieldRow("Alias", target=self.company, attr="alias"))
+        form.add_widget(FieldRow("Owner", target=self.company, attr="owner"))
 
-    def update_logo_preview(self, instance, value):
-        self.logo_preview.source = value
+        # Define and add image upload
+        # logo_preview = ImagePreview()
+        # logo_field = ImageFieldRow(labeltext="Logo", target=self.company, attr="logo")
+        # logo_field.bind(filepath=lambda inst, val: setattr(logo_preview, 'source', val))
 
-    def get_next_slot(self):
-        self.manager.load_all()
-        return len(self.manager.get_all())
 
-    def save_company(self, *args):
-        # Update fields into self.company
-        self.company.name = self.name_input.text
-        self.company.alias = self.alias_input.text
-        self.company.owner = self.owner_input.text
-        self.company.logo = self.logo_input.text
+                
+        # form.add_widget(logo_field)
+        # form.add_widget(logo_preview)
 
-        if self.company not in self.company_manager.get_all():
-            # New company
-            self.company.saveslot = self.get_next_slot()
-            self.company_manager.add(self.company)
+        logo = ImagePreview(target=self.company, attr="logo")
+        form.add_widget(logo)
 
-        # Persist all companies
-        self.company_manager.save_all()
-
-        Universe().company = self.company
-        # Navigate to next screen (e.g. ShowPlanner or TitleScreen)
-
-        if self.on_save:
-            self.on_save(self.company)
+        # You can add buttons (Save, Cancel, etc.) at the bottom of root
     
-    def load_company(self, company):
-        """Populate fields with an existing company."""
-        self.company = company
-        Universe().company = company
-        self.name_input.text = company.name
-        self.alias_input.text = getattr(company, "alias", "")
-        self.owner_input.text = company.owner
-        self.logo_input.text = company.logo
-
-    def new_company(self):
-        """Clear fields for a new company."""
-        self.company = Company(name="", owner="", saveslot=self.get_next_slot())
-        Universe().company = self.company
-        self.name_input.text = ""
-        self.alias_input.text = ""
-        self.owner_input.text = ""
-        self.logo_input.text = ""
+    def update_bg(self, *args):
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
