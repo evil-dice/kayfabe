@@ -70,8 +70,10 @@ class UniverseSelector(ModalView):
         self.size = (self.size[0] * 0.85, self.size[1] * 0.85)
     
     def _slot_selected(self, slot, company):
+        CompanyManager().load(slot)
         # dismiss the modal when a slot is chosen
         self.dismiss()
         # optionally trigger navigation to gameplay screen here
+        Universe().active_screen = "company_editor" # Testing... send to editor screen to check details
 
         
