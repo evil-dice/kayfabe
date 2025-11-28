@@ -1,27 +1,36 @@
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix
 from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.filechooser import FileChooserListView
+from kivy.metrics import dp
 
-class ImagePreview(BoxLayout):
+class ImagePreview(ButtonBehavior, BoxLayout):
     def __init__(self, initial_source=None, **kwargs):
-        super().__init__(orientation='vertical', spacing=10, size_hint=(None, None), width=200, height=200, **kwargs)
+        super().__init__(orientation='vertical', spacing=10, size_hint=(1, None), width=dp(240), pos_hint={'center_x': 0.5, 'center_y':0.5}, **kwargs)
 
         # Image widget
         self.image = Image(
             source=initial_source or '',
-            size_hint_y=1,
-            allow_stretch=True,
-            keep_ratio=True
+            size_hint_x=None,
+            size_hint_y=None,
+            pos_hint={'center_x': 0.5, 'center_y':0.5},
+            height=200,
+            width=200,
+            # allow_stretch=True,
+            # keep_ratio=True
         )
         self.add_widget(self.image)
 
         # Browse button
         self.browse_button = Button(
             text='Browse Image',
+            size_hint_x=None,
             size_hint_y=None,
-            height=30
+            width=200,
+            height=30,
+            pos_hint={'center_x': 0.5, 'center_y':0.5}
         )
         self.browse_button.bind(on_release=self.open_filechooser)
         self.add_widget(self.browse_button)
@@ -40,7 +49,7 @@ class ImagePreview(BoxLayout):
         confirm_button = Button(text='Select', size_hint_y=None, height=40)
         layout.add_widget(confirm_button)
 
-        popup = Popup(title='Select Image', content=layout, size_hint=(0.9, 0.9))
+        popup = Popup(title='Select Image', content=layout, size_hint=(0.7, 0.7))
 
         # Live preview on selection
         def on_selection(instance, selection):

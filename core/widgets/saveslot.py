@@ -1,5 +1,5 @@
 from core.widgets.panel   import Panel
-from core.widgets.labels  import HeaderLabel, FieldLabel, BodyLabel
+from core.widgets.labels  import HeaderLabel, FieldLabel, BodyLabel, CaptionLabel
 from core.widgets.tile    import Tile
 from kivy.uix.button      import ButtonBehavior
 from kivy.uix.gridlayout  import GridLayout
@@ -39,7 +39,7 @@ class SaveSlot(ButtonBehavior, Panel):
         # # self.label.bind(size=lambda inst, val: setattr(inst, "text_size", (inst.width, None)))
         # self.add_widget(self.label)
         
-        self.slot = FieldLabel(text=f"Slot {slot}")
+        self.slot = CaptionLabel(text=f"Slot {slot}")
         self.add_widget(self.slot)
     
     def _update_size(self, window, size):
@@ -49,8 +49,8 @@ class SaveSlot(ButtonBehavior, Panel):
         # Set the active company in the Universe singleton
         CompanyManager().load(self.target['slot'])
 
-        # Debug output
-        print(Universe().current_company)
+        # # Debug output
+        # print(Universe().company)
 
         # fire the event
         self.dispatch('on_selected', self.target)

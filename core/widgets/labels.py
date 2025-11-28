@@ -1,5 +1,4 @@
 from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
 from kivy.metrics import dp
 
 COLORS={
@@ -12,19 +11,23 @@ COLORS={
 FONTS={
     'headers': "assets/fonts/BEBASNEUE BOLD.OTF",
     'bodytext': "assets/fonts/RUBIK-REGULAR_0.TTF",
-    'fields': "assets/fonts/BARLOWCONDENSED-REGULAR.TTF"
+    'fields': "assets/fonts/BARLOWCONDENSED-REGULAR.TTF",
+    'captions': "assets/fonts/BARLOWCONDENSED-REGULAR.TTF"
 }
 
 STYLES = {
     "default": {"font_size": "16dp", "font_name": FONTS['bodytext'], "color": COLORS['primary']},
     "header": {"font_size": "48dp", "font_name": FONTS['headers'], "color": COLORS['secondary']},
-    "field": {"font_size": "16dp", "font_name": FONTS['fields'], "color": COLORS['primary']}
+    "field": {"font_size": "16dp", "font_name": FONTS['fields'], "color": COLORS['primary']},
+    "caption": {"font_size": "17dp", "font_name": FONTS['fields'], "color": COLORS['primary']}
 }
 
 class CustomLabel(Label):
-    def __init__(self, text, padding_top=0, padding_bottom=0, variant="default", **kwargs):
+    def __init__(self, text, padding_top=0, padding_bottom=0, size_hint=(None, None), variant="default", **kwargs):
         style = STYLES.get(variant, {})
         super().__init__(text=text, **{**style, **kwargs})
+
+        self.size_hint = size_hint
 
         # # Fill width, fixed height
         # self.size_hint_x = None   # Disable horizontal scaling
@@ -51,14 +54,16 @@ class CustomLabel(Label):
         self.height = self.texture_size[1] + self.padding_top + self.padding_bottom
 
 class HeaderLabel(CustomLabel):
-    def __init__(self, text, **kwargs):
+    def __init__(self, text, halign='left', height=dp(50), **kwargs):
         super().__init__(text, variant="header", **kwargs)
 
         # Customizations
         self.size_hint_x = 1   # Fill width of parent
-        self.halign='center'
+        self.halign=halign
         self.valign='top'
         self.padding = (0, 10) # Padding after
+        self.height = height
+        
         
 class BodyLabel(CustomLabel):
     def __init__(self, text, **kwargs):
@@ -70,12 +75,22 @@ class BodyLabel(CustomLabel):
         self.padding = (dp(10), dp(10)) # Padding before and after
 
 class FieldLabel(CustomLabel):
-    def __init__(self, text, **kwargs):
+    def __init__(self, text, size_hint_x=0.2, halign="left", height=30, **kwargs):
         super().__init__(text, variant="field", **kwargs)
 
         # Customizations
-        self.size_hint_y = 1  # match height of field
+        self.size_hint_x = size_hint_x
+        self.height = height
+        self.halign = halign
 
+class CaptionLabel(CustomLabel):
+    def __init__(self, text, size_hint_x=1, halign="center", height=30, **kwargs):
+        super().__init__(text, variant="caption", **kwargs)
+
+        # Customizations
+        self.size_hint_x = size_hint_x
+        self.height = height
+        self.halign = halign
 
 
 
@@ -153,13 +168,3 @@ class BodyText(Label):
             halign="left",
             valign="top",
             **kwargs)
-
-class FormField(TextInput):
-    def __init__(self, **kwargs):
-        super().__init__()
-
-        # Fill width, fixed height
-        self.size_hint_x = 1      # Fill width of parent
-        self.size_hint_y = None   # Disable vertical scaling
-        self.height = 30          # Explicit height
-        self.multiline = False

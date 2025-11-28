@@ -2,8 +2,11 @@
 
 from kivy.uix.image import Image
 from kivy.uix.button import Button, ButtonBehavior
+from kivy.metrics import dp
+
 
 from utils.hoverbehavior import HoverBehavior
+from utils.realsizehint import RealSizeHint
 
 from core.widgets.labels import COLORS
 
@@ -22,8 +25,12 @@ class ImageButton(ButtonBehavior, Image):
 # img_btn.bind(on_release=lambda instance: print("Image button clicked!"))
 
 class MainMenuButton(Button, HoverBehavior):
-    def __init__(self, label_to_update=None, hover_text="", **kwargs):
-        super().__init__(**kwargs, size_hint= (0.85, 1), pos_hint={'center_x': 0.5})
+    def __init__(self, label_to_update=None, size_hint=(0.85, None), height=dp(45), hover_text="", **kwargs):
+        super().__init__(pos_hint={'center_x': 0.5}, **kwargs)
+
+        self.size_hint = size_hint
+        self.height=height
+
         # Text styling
         self.font_name = "assets/fonts/OLD PRESS ITALIC_0.TTF"   # path to your font file
         self.font_size = 32                          # larger text
