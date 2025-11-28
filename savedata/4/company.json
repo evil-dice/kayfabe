@@ -1,8 +1,0 @@
-{
-    "name": "World Wrestling Entertainment",
-    "alias": "WWE",
-    "logo": "assets/images/genericshow2.png",
-    "owner": "Triple H",
-    "saveslot": 1,
-    "savepath": "savedata\\1"
-}

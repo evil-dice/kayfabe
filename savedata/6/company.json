@@ -1,8 +1,0 @@
-{
-    "name": "All Elite Wrestling",
-    "alias": "AEW",
-    "logo": "assets/images/aew.png",
-    "owner": "Tony Khan",
-    "saveslot": 0,
-    "savepath": "savedata\\0"
-}
