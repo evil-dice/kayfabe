@@ -2,11 +2,12 @@
 
 from kivy.event import EventDispatcher
 from kivy.properties import StringProperty, ListProperty, ObjectProperty, BooleanProperty
-# from companies.manager import CompanyManager
+
+from companies.model import Company
 
 class Universe(EventDispatcher):
     active_screen = StringProperty("title")
-    company = ObjectProperty(None)
+    company = ObjectProperty(None, allownone=True)
     roster = ListProperty([])
     titles = ListProperty([])
     events = ListProperty([])
@@ -16,9 +17,10 @@ class Universe(EventDispatcher):
 
     _instance = None
 
-    def __new__(cls):
-        if cls._instance is None:
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
             cls._instance = super(Universe, cls).__new__(cls)
+            cls._instance.company = Company()
             EventDispatcher.__init__(cls._instance)
         return cls._instance
 
