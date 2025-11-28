@@ -16,18 +16,21 @@ class CompanyManager:
             cls._instance._current = None
         return cls._instance
     
-    def new(self, name, alias, logo, owner, saveslot):
-        '''Creates a new company object in the first open slot.'''
-
+    def first_available_slot():
         # Set the save slot
         root = Path(SAVEPATH)
         slots = sorted(int(p.name) for p in root.iterdir() if p.is_dir() and p.name.isdigit())
         for i, slot in enumerate(slots):
             if i != slot:
                 saveslot = i
+                return saveslot
+
+    def new(self):
+        '''Creates a new company object in the first open slot.'''
         
         # Generate new company
-        new_company = Company(name, alias, logo, owner, saveslot)
+        new_company = Company()
+        print(new_company)
 
         # add to list
         self._companies.append(new_company)
@@ -35,6 +38,9 @@ class CompanyManager:
         # Save to disk
         self.save(new_company)
 
+        # Set it as active
+        Universe().company = new_company
+        
         # Output to console
         return new_company
 
@@ -51,19 +57,18 @@ class CompanyManager:
 
     def load(self, slot):
         '''Loads a JSON file with company data to memory.'''
+        
+
         company_datafile = Path(SAVEPATH) / str(slot) / "company.json"
         if company_datafile.exists():
             with open(company_datafile, "r", encoding="utf-8") as f:
                 data = json.load(f)
-                company = Company.from_dict(data)
-                self._companies.append(company)
 
                 # Update Universe singleton
-                # self.select(company)
-                Universe().current_company = company
+                Universe().company = Company.from_dict(data)
 
-                print(f"{Universe().current_company.name} successfully loaded to Universe")
-                return company
+                print(f"{Universe().company.name} successfully loaded to Universe")
+                return Universe().company
 
     def load_all(self):
         pass
