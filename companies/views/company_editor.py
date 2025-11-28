@@ -6,7 +6,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Rectangle, Color
 from kivy.core.window import Window
-from core.widgets.imageselect import ImagePreview
+
 
 from core.widgets.panel import Panel
 from core.widgets.labels import FieldLabel
