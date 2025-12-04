@@ -21,7 +21,7 @@ class SaveSlot(ButtonBehavior, Panel):
         self.target = target
 
         # Register event to close modal
-        self.register_event_type('on_selected')  # declare custom event
+        self.register_event_type('on_saveslot_selected')  # declare custom event
 
         # Layout
         # self.grid = GridLayout(cols=1)
@@ -49,24 +49,12 @@ class SaveSlot(ButtonBehavior, Panel):
         # Set the active company in the Universe singleton
         CompanyManager().load(self.target['slot'])
 
-        # # Debug output
-        # print(Universe().company)
-
         # fire the event
-        self.dispatch('on_selected', self.target)
+        self.dispatch('on_saveslot_selected', self.target)
 
-        # Open the gameplay screen with this company loaded
-        # TK
-
-    def on_selected(self, company):
+    def on_saveslot_selected(self, company):
         """Default handler (does nothing)."""
         pass
-
-class NewSaveSlot(SaveSlot):
-    def __init__(self, on_add, **kwargs):
-        super().__init__(target=None, name="Add New Company", slot="New", **kwargs)
-        self.tile.if_none = "assets/images/genericcompany.png"
-        self.bind(on_release=lambda _: on_add())
 
 
 
