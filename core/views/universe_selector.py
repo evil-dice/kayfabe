@@ -18,7 +18,7 @@ from state.universe         import Universe
 from core.widgets.panel     import Panel
 from core.widgets.labels    import BodyLabel, FieldLabel
 from core.widgets.tile      import Tile
-from core.widgets.saveslot  import SaveSlot, NewSaveSlot
+from core.widgets.saveslot  import SaveSlot
 from core.widgets.buttons   import MainMenuButton
 
 # Modules
@@ -63,17 +63,20 @@ class UniverseSelector(ModalView):
         for company in CompanyManager().list_slots():
             # Create save slot
             self.slot = SaveSlot(company, company['name'], company['slot'])
-            self.slot.bind(on_selected=self._slot_selected)
+            self.slot.bind(on_saveslot_selected=self._slot_selected)
             self.content.add_widget(self.slot)
 
     def _update_size(self, window, size):
         self.size = (self.size[0] * 0.85, self.size[1] * 0.85)
     
     def _slot_selected(self, slot, company):
-        CompanyManager().load(slot)
-        # dismiss the modal when a slot is chosen
+        print("SaveSlot clicked. Company updated:")
+        print(Universe().company)
+
+        # Close modal
         self.dismiss()
+        
         # optionally trigger navigation to gameplay screen here
-        Universe().active_screen = "company_editor" # Testing... send to editor screen to check details
+        Universe().change_screen("company_editor") # Testing... send to editor screen to check details
 
         

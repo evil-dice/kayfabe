@@ -49,6 +49,7 @@ class TitleScreen(Screen):
         # Assign methods
         self.MainMenu_New.bind(on_release=self.new_universe)
         self.MainMenu_Load.bind(on_release=self.show_universe_selector)
+        self.MainMenu_Continue.bind(on_release=self.show_gameplay_screen)
 
         # Add buttons
         self.content.add_widget(self.MainMenu_Label)
@@ -77,7 +78,11 @@ class TitleScreen(Screen):
     def new_universe(self, *args):
         # Create a fresh Company
         Universe().company = Company(name="New Company")
+
         # Switch to editor screen
-        Universe().active_screen = "company_editor"
+        Universe().change_screen("company_editor")
+    
+    def show_gameplay_screen(self, *args):
+        Universe().change_screen("gameplay_hub")
 
 
