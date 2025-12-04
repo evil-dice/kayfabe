@@ -6,8 +6,9 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Rectangle, Color
 from kivy.core.window import Window
+from kivy.uix.button import Button
 
-
+from companies.manager import CompanyManager
 from core.widgets.panel import Panel
 from core.widgets.labels import FieldLabel
 from state.universe import Universe
@@ -57,7 +58,27 @@ class CompanyEditor(Screen):
         # Define and add image upload
         self.form.add_widget(ImagePreview(target=company, attr="logo"))
 
-        # You can add buttons (Save, Cancel, etc.) at the bottom of root
+        # Define Button Area
+        # self.button_row = BoxLayout(orientation="horizontal", size_hint=(None, 1), height=30)
+        self.button_row = BoxLayout(
+            orientation='horizontal',
+            size_hint_y=None,
+            height=30,
+            spacing=10,
+            pos_hint={'center_x': 0.5}
+        )
+
+        # Define Buttons
+        ok_btn = Button(text="OK", size_hint=(1, None), height=30)
+        ok_btn.bind(on_release=lambda *args: (CompanyManager().save(Universe().company), Universe().change_screen(Universe().previous_screen)))
+        
+        cancel_btn = Button(text="Cancel", size_hint=(1, None), height=30)
+        cancel_btn.bind(on_release=lambda *args: Universe().change_screen(Universe().previous_screen))
+
+        # Add to layout 
+        self.form.add_widget(self.button_row)
+        self.button_row.add_widget(ok_btn)
+        self.button_row.add_widget(cancel_btn)
 
     def update_bg(self, *args):
         self.bg_rect.pos = self.pos
