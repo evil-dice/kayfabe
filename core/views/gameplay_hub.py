@@ -5,7 +5,8 @@ from kivy.graphics import Rectangle, Color
 from kivy.core.window import Window
 
 from core.widgets.navbar import NavBar
-from core.views.overview_screen import OverviewScreen
+from core.views.hub.overview import Overview
+from core.views.hub.schedule import Schedule
 from state.universe import Universe
 
 class GameplayHub(Screen):
@@ -15,7 +16,7 @@ class GameplayHub(Screen):
         # Background image
         with self.canvas.before:
             self.bg_color = Color(1, 1, 1, 1)
-            self.bg_rect = Rectangle(source="assets/images/GameplayScreen.png",
+            self.bg_rect = Rectangle(source="assets/images/overview_bg.png",
                                      pos=self.pos, size=self.size)
         self.bind(size=self.update_bg, pos=self.update_bg)
 
@@ -35,27 +36,33 @@ class GameplayHub(Screen):
         Universe().bind(active_gameplay_view=self._switch_view)
 
         # Start with overview
-        self._switch_view(Universe(), Universe().active_gameplay_view)
+        Universe().active_gameplay_view = "overview"
 
     def _switch_view(self, inst, val):
         """Swap the content area to show the requested view."""
+        print("GameplayHub received:", val)
         self.content_area.clear_widgets()
 
         # Create a fresh instance each time so it redraws
         if val == "overview":
-            view = OverviewScreen()
-        # elif val == "schedule":
-        #     from core.views.schedule_screen import ScheduleScreen
-        #     view = ScheduleScreen()
-        # elif val == "roster":
-        #     from core.views.roster_screen import RosterScreen
-        #     view = RosterScreen()
-        # elif val == "rankings":
-        #     from core.views.rankings_screen import RankingsScreen
-        #     view = RankingsScreen()
-        # elif val == "creative":
-        #     from core.views.creative_screen import CreativeScreen
-        #     view = CreativeScreen()
+            self.bg_rect.source = "assets/images/overview_bg.png"
+            view = Overview()
+        elif val == "schedule":
+            self.bg_rect.source = "assets/images/schedule_bg.png"
+            from core.views.hub.schedule import Schedule
+            view = Schedule()
+        elif val == "roster":
+            self.bg_rect.source = "assets/images/roster_bg.png"
+            from core.views.hub.roster import Roster
+            view = Roster()
+        elif val == "rankings":
+            self.bg_rect.source = "assets/images/rankings2_bg.png"
+            from core.views.hub.rankings import Rankings
+            view = Rankings()
+        elif val == "creative":
+            self.bg_rect.source = "assets/images/creative2_bg.png"
+            from core.views.hub.creative import Creative
+            view = Creative()
         else:
             # fallback
             from kivy.uix.label import Label
