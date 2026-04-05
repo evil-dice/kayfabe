@@ -1,8 +1,8 @@
 {
-    "name": "All Elite Wrestling",
-    "alias": "AEW",
-    "logo": "assets/images/aew.png",
-    "owner": "Tony Khan",
-    "saveslot": 0,
-    "savepath": "savedata\\0"
+    "name": "World Wrestling Entertainment",
+    "alias": "WWE",
+    "logo": "assets/images/wwe.png",
+    "owner": "Paul Levesque",
+    "saveslot": "1",
+    "savepath": "savedata/0"
 }

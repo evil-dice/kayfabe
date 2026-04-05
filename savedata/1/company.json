@@ -2,7 +2,7 @@
     "name": "World Wrestling Entertainment",
     "alias": "WWE",
     "logo": "assets/images/wwe.png",
-    "owner": "Triple H",
-    "saveslot": 1,
-    "savepath": "savedata\\1"
+    "owner": "Paul Levesque",
+    "saveslot": "1",
+    "savepath": "savedata/1"
 }

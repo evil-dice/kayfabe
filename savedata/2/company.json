@@ -1,8 +1,0 @@
-{
-    "name": "Impact Wrestling",
-    "alias": "Impact!",
-    "logo": "assets/images/impact.png",
-    "owner": "Billy Corgan",
-    "saveslot": 2,
-    "savepath": "savedata\\2"
-}
