@@ -4,7 +4,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
 
-from config.styles import COLORS
+from theme.styles import color, font, size
 from utils.realsizehint import RealSizeHint
 
 # class Panel(BoxLayout, RealSizeHint):
