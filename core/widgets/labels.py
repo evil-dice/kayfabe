@@ -1,5 +1,6 @@
 from kivy.uix.label import Label
 from kivy.metrics import dp
+from theme.styles import color, font, size
 
 COLORS={
     'primary': (1, 1, 1, 0.9),
@@ -84,15 +85,45 @@ class FieldLabel(CustomLabel):
         self.halign = halign
 
 class CaptionLabel(CustomLabel):
-    def __init__(self, text, size_hint_x=1, halign="center", height=30, **kwargs):
+    def __init__(self, text, size_hint_x=1, halign="center", valign="middle", height=30, **kwargs):
         super().__init__(text, variant="caption", **kwargs)
 
         # Customizations
         self.size_hint_x = size_hint_x
         self.height = height
         self.halign = halign
+        self.valign = valign
 
+from kivy.graphics import PushMatrix, PopMatrix, Rotate
 
+class SideLabel(CaptionLabel):
+    def __init__(self, text, size_hint_y=None, halign="center", valign="middle", width=None, height=30, angle=90, **kwargs):
+        # Keep all the CaptionLabel setup
+        super().__init__(text, **kwargs)
+
+        # Customizations
+        self.size_hint_x = 1
+        self.size_hint_y = size_hint_y
+        if not width:
+            self.height = height
+        elif height:
+            self.width = width
+        self.halign = halign
+        self.valign = valign
+        self.pos_hint={'center_x': 0.5, 'center_y': 0.5}
+
+        # Add rotation around the widget's center
+        with self.canvas.before:
+            PushMatrix()
+            self.rot = Rotate(angle=angle, origin=self.center)
+        with self.canvas.after:
+            PopMatrix()
+
+        # Keep rotation origin synced if widget moves/resizes
+        self.bind(pos=self._update_origin, size=self._update_origin)
+
+    def _update_origin(self, *args):
+        self.rot.origin = self.center
 
 
 
