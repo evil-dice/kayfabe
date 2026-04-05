@@ -5,9 +5,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from state.universe import Universe
-from core.widgets.navbar import SimpleNavBar
 # from shell.title_screen import TitleScreen
 from core.views.title_screen import TitleScreen
+from core.views.gameplay_hub import GameplayHub
 from companies.views.company_editor import CompanyEditor
 
 class WrestleVerseApp(App):
@@ -21,6 +21,7 @@ class WrestleVerseApp(App):
         sm = ScreenManager()
         sm.add_widget(TitleScreen(name="title"))
         sm.add_widget(CompanyEditor(name="company_editor"))
+        sm.add_widget(GameplayHub(name="gameplay_hub"))
 
         # nav = SimpleNavBar(screen_names=["title", "company_editor"], screen_manager=sm)
 
